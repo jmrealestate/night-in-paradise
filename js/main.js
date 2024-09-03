@@ -55,7 +55,7 @@ scrollLinks.forEach((link) => {
 
 let date = new Date().getFullYear();
 let copy = document.getElementById("copy");
-copy.innerHTML = `Copyright &copy; 2022-${date}`;
+copy && (copy.innerHTML = `Copyright &copy; 2022-${date}`);
 
 async function callLogApi() {
   const now = new Date().getTime();
