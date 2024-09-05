@@ -103,7 +103,7 @@ function sendLogData() {
       utm_medium: urlParams.get("utm_medium"),
       utm_campaign: urlParams.get("utm_campaign"),
     },
-    service: "village",
+    service: "external website",
     brand: "Night In Paradise",
   };
 }
