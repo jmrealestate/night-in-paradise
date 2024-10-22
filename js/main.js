@@ -104,8 +104,7 @@ function sendLogData() {
       utm_campaign: urlParams.get("utm_campaign"),
     },
 
-    service: "external website",
-    brand: "Night In Paradise",
+    service: "67177f42cdd163c8f22ba4c7",
   };
 }
 
