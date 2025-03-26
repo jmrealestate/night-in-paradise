@@ -117,3 +117,18 @@ function generateUUID() {
 }
 
 callLogApi();
+
+const images = MENU_DATA?.sub_categories
+  ?.sort((a, b) => a.order - b.order)
+  .filter((c) => !c.hide);
+
+const imagesDom = document.getElementById("bean-and-bar-images");
+images.forEach((cat) => {
+  const image = document.createElement("img");
+
+  image.src = cat.bgImg;
+  image.alt = cat.label;
+  image.className = "menu-img";
+
+  imagesDom.appendChild(image);
+});
