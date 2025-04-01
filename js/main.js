@@ -58,62 +58,31 @@ let copy = document.getElementById("copy");
 copy && (copy.innerHTML = `Copyright &copy; 2022-${date}`);
 
 async function callLogApi() {
-  const now = new Date().getTime();
-  const lastCall = localStorage.getItem("lastCall");
-  if (lastCall) {
-    const lastCallNb = Number(lastCall);
-    if (now - lastCallNb < 1800000) {
-      return;
-    }
-  }
-
   try {
-    await fetch(
+    const payload = {
+      uuid: localStorage.getItem("uuid"),
+      screenWidth: window.screen.width,
+      screenHeight: window.screen.height,
+      deviceOrientation: screen.orientation?.type || "unknown",
+      service: "67177f42cdd163c8f22ba4c7",
+
+      platform: navigator.platform || "unknown",
+      language: navigator.language || "unknown",
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    };
+
+    const response = await fetch(
       "https://main-server-u49f.onrender.com/api/v1/ks-solutions/logs",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sendLogData()),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       }
     );
 
-    localStorage.setItem("lastCall", now.toString());
-  } catch (error) {}
-}
-
-// Function to send log data to the server
-function sendLogData() {
-  let uuid = localStorage.getItem("uuid");
-
-  if (!uuid) {
-    uuid = generateUUID();
+    const uuid = await response.text();
     localStorage.setItem("uuid", uuid);
-  }
-
-  const urlParams = new URLSearchParams(window.location.search);
-  return {
-    uuid,
-    screenWidth: window.screen.width,
-    screenHeight: window.screen.height,
-    deviceOrientation: screen.orientation.type,
-    utmParameters: {
-      utm_source: urlParams.get("utm_source"),
-      utm_medium: urlParams.get("utm_medium"),
-      utm_campaign: urlParams.get("utm_campaign"),
-    },
-
-    service: "67177f42cdd163c8f22ba4c7",
-  };
-}
-
-function generateUUID() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+  } catch {}
 }
 
 callLogApi();
