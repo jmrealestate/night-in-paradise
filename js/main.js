@@ -83,9 +83,10 @@ async function callLogApi() {
       "https://main-server-u49f.onrender.com/api/v1/ks-solutions/logs",
       {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      }
+      },
     );
 
     const uuid = await response.text();
