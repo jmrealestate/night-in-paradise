@@ -80,7 +80,7 @@ async function callLogApi() {
     };
 
     const response = await fetch(
-      "https://main-server-u49f.onrender.com/api/v1/ks-solutions/logs",
+      "https://kss-taby.onrender.com/api/v1/ks-solutions/logs",
       {
         method: "POST",
         credentials: "include",
